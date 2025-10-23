@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 from datetime import date
 from werkzeug.security import generate_password_hash,check_password_hash
 from functools import wraps
+import os
 
 # naming_convention：制約に自動で名前を付ける
 # username = db.Column(db.String(64), unique=True)　→　uq_users_usernameと名前が付く
@@ -26,7 +27,8 @@ migrate = Migrate()
 
 app = Flask(__name__)
 app.secret_key = 'login_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(BASE_DIR, 'todo.db')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # バインド
