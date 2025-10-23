@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block blockcontent %}
+
+
+<section id="user_login">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="height:100vh;">
+        <div class="card bg-primary" style="width: 18rem;">
+            <div class="card-body ">
+
+                <h5 class="card-title text-center text-white fs-4">ログイン</h5>
+                <form method="POST" action="{{url_for('login')}}">
+                    <input class="form-control my-3" name="username" type="text" placeholder="ユーザー名" />
+                    <input class="form-control my-3" name="password" type="password" placeholder="パスワード" />
+                    <button type="submit" class="btn my-2 btn-primary btn-outline-light w-100">
+                        ログイン
+                    </button>
+                </form>
+            </div>
+        </div>
+        <a class="p-3" href='/auth'>新規登録する</a>
+    </div>
+</section>
+{% endblock %}
