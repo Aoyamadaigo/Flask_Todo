@@ -9,7 +9,7 @@
             <div class="card-body ">
 
                 <h5 class="card-title text-center text-white fs-4">ログイン</h5>
-                <form method="POST" action="{{url_for('login')}}">
+                <form method="POST" action="{{url_for('auth.login_get')}}">
                     <input class="form-control my-3" name="username" type="text" placeholder="ユーザー名" />
                     <input class="form-control my-3" name="password" type="password" placeholder="パスワード" />
                     <button type="submit" class="btn my-2 btn-primary btn-outline-light w-100">
@@ -18,7 +18,7 @@
                 </form>
             </div>
         </div>
-        <a class="p-3" href='/auth'>新規登録する</a>
+        <a class="p-3" href='{{url_for("auth.register_get")}}'>新規登録する</a>
     </div>
 </section>
 {% endblock %}

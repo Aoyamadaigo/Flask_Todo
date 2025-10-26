@@ -6,7 +6,11 @@ __pycache__/
 *.db
 
 # venv
+venv/
 .venv/
+
+# env
+.env/
 
 # Flask instance folder (if not needed)
 instance/

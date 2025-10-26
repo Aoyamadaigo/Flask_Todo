@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block blockcontent %}
+
+<h1 class="m-2">Add Task</h1>
+    <form action="add_task" method="POST">
+        <div class="d-flex flex-column m-3 gap-3">
+            <div>
+                <p class="fs-5">タスク内容</p>
+                <input type="text" name="content" required>
+            </div>
+            <div>
+                <p class="fs-5">締切日</p>
+                <input type="date" name="due_date" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">タスクを追加する</button>
+    </form>
+{% endblock %}
