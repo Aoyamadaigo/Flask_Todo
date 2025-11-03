@@ -8,13 +8,13 @@ login.htmlからフォームの情報を受け取り、ログインに成功し�
 
 
 from flask import Blueprint,request, render_template, session, flash, redirect, url_for
-from apps.auth.models import User
+from apps.auth.models import User #dbやdbのモデル,extensionsを持ってくる際は必ず参照できるように絶対参照でimport
 from apps.auth.auth_service import auth_service
 from apps.extensions import db
-from . import bp
+from . import bp #.は同じ階層のフォルダにある__init__.pyのこと
 
 
-@bp.get("/")
+@bp.get("/",endpoint="login_get")
 def login_get():
     return render_template("login.html")    
 

@@ -1,8 +1,8 @@
-"""init schema with naming_convention
+"""initial migration
 
-Revision ID: 7f89328dc8d9
+Revision ID: e4792bec4f5a
 Revises: 
-Create Date: 2025-10-22 07:38:43.828464
+Create Date: 2025-11-03 09:40:50.177640
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7f89328dc8d9'
+revision = 'e4792bec4f5a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=64), nullable=False),
     sa.Column('useremail', sa.String(length=64), nullable=False),
-    sa.Column('password_hash', sa.String(length=128), nullable=True),
+    sa.Column('password_hash', sa.String(length=128), nullable=False),
     sa.Column('administrator', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_users'))
     )

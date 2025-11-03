@@ -10,12 +10,12 @@ from .register_service import register_service
 from werkzeug.security import generate_password_hash
 from apps.auth.models import User
 
-@bp.get("/register")
+@bp.get("/register",endpoint="register_get")
 def register_get():
     return render_template("register.html")
 
 
-@bp.post("/register")
+@bp.post("/register",endpoint="register_post")
 def register_post():
     username = request.form.get('username','').strip()
     password = request.form.get('password','').strip()
@@ -30,7 +30,7 @@ def register_post():
 
     if dup:
         flash(error, 'error')
-        return redirect(url_for('auth.login_get'))
+        return redirect(url_for('auth.register_get'))
     
     else:
         try:

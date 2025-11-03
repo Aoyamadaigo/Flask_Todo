@@ -2,6 +2,7 @@
 add_task.py
 
 todoの追加を設定するモジュール
+初期画面がある場合は、bp.getとbp.postに分けてルートを作成
 """
 
 from flask import request, render_template, url_for, session, redirect
@@ -11,12 +12,13 @@ from apps.extensions import db
 from . import bp
 from datetime import date
 
-@bp.get("/add_task") 
+@bp.get("/add_task", endpoint ="add_task_get") 
 @login_required
 def add_task_get():
     return render_template("add_task.html")
 
-@bp.post("/add_task")
+# todo追加画面でタスク追加（post）が実施された際の機能
+@bp.post("/add_task", endpoint ="add_task_post")
 @login_required
 def add_task_post():
         content = request.form.get('content')

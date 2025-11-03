@@ -1,6 +1,11 @@
-from apps import create_app
+"""
+app.py
 
-from apps import create_app
+flaskはappsフォルダは以下のapp.pyファイルを探し,appを実行する。
+__init__.pyでアプリの初期を行い、app.pyで実行する
+"""
+
+from . import create_app
 
 app = create_app()
 
