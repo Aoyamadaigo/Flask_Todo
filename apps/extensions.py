@@ -27,7 +27,7 @@ convention = {
 metadata = MetaData(naming_convention=convention)
 
 db = SQLAlchemy(metadata=metadata)
-migrate = Migrate()
+migrate = Migrate(directory="apps/migrations") 
 
 
 # SQLiteで外部キー制約を有効にする
