@@ -7,7 +7,7 @@ services:
     buildCommand: "pip install -r requirements.txt"
     # ← CLI がアプリを見つけられるように --app を付ける
     preDeployCommand: "flask --app wsgi.py db upgrade"
-    startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers=2"
+    startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.6
