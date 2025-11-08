@@ -1,23 +1,33 @@
 import os
-from flask import Flask,redirect,url_for
-from .extensions import db,migrate
+from flask import Flask, redirect, url_for
+from .extensions import db, migrate
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = 'login_secret_key'
+    app.secret_key = os.getenv("SECRET_KEY", "login_secret_key")
     app.url_map.strict_slashes = False
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.sqlite"
+
+    # ===== DB 設定：本番は DATABASE_URL、なければローカルのSQLite =====
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    database_url = os.getenv("DATABASE_URL", f"sqlite:///{os.path.join(base_dir, 'todo.sqlite')}")
+
+    # Render/Heroku系の "postgres://" を SQLAlchemy 形式へ補正
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql+psycopg2://", 1)
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-    db.init_app(app) #dbの初期化
+    db.init_app(app)
     migrate.init_app(app, db)
 
-    from apps import models
+    # モデルをAlembicに認識させる
+    from . import models
 
-    from apps.auth import bp as auth_bp #apps内の各機能のブループリントを定義
+    # Blueprints
+    from apps.auth import bp as auth_bp
     from apps.todo import bp as todo_bp
-    app.register_blueprint(auth_bp) #各機能のブループリントを登録
+    app.register_blueprint(auth_bp)
     app.register_blueprint(todo_bp)
 
     @app.get("/")
@@ -25,4 +35,3 @@ def create_app():
         return redirect(url_for("auth.login_get"))
 
     return app
-

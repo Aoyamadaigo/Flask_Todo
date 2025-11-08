@@ -5,9 +5,8 @@ services:
     plan: free
     region: oregon
     buildCommand: "pip install -r requirements.txt"
-    # ← CLI がアプリを見つけられるように --app を付ける
     preDeployCommand: "flask --app wsgi.py db upgrade"
-    startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT"
+    startCommand: "bash -lc 'FLASK_APP=apps/wsgi.py flask db upgrade && exec gunicorn apps.wsgi:app --bind 0.0.0.0:$PORT --log-file - --access-logfile -'"
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.6
