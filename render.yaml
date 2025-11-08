@@ -2,16 +2,17 @@ services:
   - type: web
     name: flask-sqlalchemy-app
     env: python
-    plan: free            
-    region: oregon         
+    plan: free
+    region: oregon
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --workers=2"
-    preDeployCommand: "flask db upgrade"   
+    # ← CLI がアプリを見つけられるように --app を付ける
+    preDeployCommand: "flask --app wsgi.py db upgrade"
+    startCommand: "gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers=2"
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.6
       - key: FLASK_APP
-        value: app.py
+        value: wsgi.py                # 念のため設定（--app があれば不要だが保険）
       - key: FLASK_ENV
         value: production
       - key: DATABASE_URL
@@ -22,4 +23,4 @@ services:
 databases:
   - name: flask-db
     plan: free
-    ipAllowList: []  
+    ipAllowList: []
